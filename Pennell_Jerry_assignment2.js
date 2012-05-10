@@ -13,8 +13,6 @@ var str    = 'bacon',                                   //Create a static string
     listOfBacon = ["Pork", "Turkey", "Faken"];          //Array List of bacon out there
 
  
- 
- 
 //Boolean Function
 
 var isBestBacon = function(str,typeOfBacon) {                             //Accepts two arguments
@@ -33,9 +31,9 @@ var poundOfBacon = function(numPiecesOfBaconForNirvana) {   //Accepts a number o
 	var piecesToMakePound = 24,                             //Static set amount to make a pound of bacon
 	    cutOfBacon = 'medium',                              //The typc of cut of bacon
 	    myNumberOfSlices =0,
-	    howManySlices = piecesToMakePound;               //How many slices left to get to bacon nirvana
+	    howManySlices = piecesToMakePound;                  //How many slices left to get to bacon nirvana
 
-	    while(myNumberOfSlices < piecesToMakePound){     //While true output we still need more bacon!
+	    while(myNumberOfSlices < piecesToMakePound){        //While true output we still need more bacon!
 	        console.log("");
 			console.log("I have "+myNumberOfSlices+" slices of "+str+" that\'s not enough for a pound!");
 			console.log("It takes "+numPiecesOfBaconForNirvana+" to reach Bacon Nirvana..");	
@@ -124,16 +122,15 @@ var logger = function()
     var oldConsoleLog = null;
     var pub = {};
 
-    pub.enableConsole =  function enableConsole()                        //Adds the method to enable the console
-                        {
+    pub.enableConsole =  function enableConsole(){                        //Adds the method to enable the console
+                        
                             if(oldConsoleLog == null)
                                 return;
-
                             window['console']['log'] = oldConsoleLog;
                         };
 
-    pub.disableConsole = function disableConsole()                       //Adds the method to disable the console
-                        {
+    pub.disableConsole = function disableConsole(){                       //Adds the method to disable the console
+                        
                             oldConsoleLog = console.log;
                             window['console']['log'] = function() {};
                         };
@@ -169,8 +166,7 @@ logger.enableConsole();                                                         
 		  console.log("");
 		  
 		                                  
-		  arriveAtBaconNirvana(boughtBacon);     //Procedure that calls the functions to see if we Arrive at Bacon Nirvana
-			            
+		  arriveAtBaconNirvana(boughtBacon);     //Procedure that calls the functions to see if we Arrive at Bacon Nirvana	            
            
         } 
 })();	

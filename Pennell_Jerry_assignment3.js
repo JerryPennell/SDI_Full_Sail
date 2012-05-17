@@ -200,7 +200,7 @@ function Cooker(pan, temp) {
 		     if (this.temp >= 350 && pan ==this.pansizes[0] ) {
 		           checkCrispy=  true;		      
 		     }		     
-		     return checkCrispy;
+		     return checkCrispy;                            //Checks to see if the bacon can be crispy for output
 	     }
 	     
 	   this.CrispyValue = function() {                      //Return values for the story for Crispy or not crispy
@@ -214,6 +214,20 @@ function Cooker(pan, temp) {
 
 
 
+/**
+ * Function to list the types of bacon
+ * Nested For loop
+ *  Calls list
+ */
+function displayJSONBaconTypeList(){
+	for (var key in myJSONBaconTypeObject) {                  //Loop through the JSONObject
+		   var obj = myJSONBaconTypeObject[key];              //setting the properties of the Object
+		   for (var prop in obj) {                            //Output of the objects property of BaconName
+		      console.log(prop + " = " + obj[prop].baconName);
+		   }
+		}
+}
+
   
 
 /**
@@ -224,6 +238,9 @@ function Cooker(pan, temp) {
 
 var arriveAtBaconNirvana = function (boughtBacon) {                 //Main Call
 
+
+    console.log("What types of bacon can I buy.. Let me see...");                 //Review which types of bacon to buy
+	displayJSONBaconTypeList();                                                      //List of bacons to buy	
 
 //Will I arrive a bacon Nirvana?!?! Set bought bacon to true to see Bacon Nirvana
 

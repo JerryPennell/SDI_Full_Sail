@@ -190,7 +190,7 @@ function Cooker(pan, temp) {
 	   this.pansizes =['small','medium','large'];       //Array Property
 	   
 	   this.howToCookBacon = function(){ 
-	     return 'If your going to cook this bacon use ' + this.pan + ' at ' + this.temp + ' degrees.';       //Returns recommended bacon use set by user                       
+	     return 'If your going to cook this bacon use a ' + this.pan + ' pan at ' + this.temp + ' degrees.';       //Returns recommended bacon use set by user                       
 	   }	
 	     
 	   this.isCrispy = function() { 															//Method to check if pan will allow the bacon to get crispy	     	
@@ -202,17 +202,44 @@ function Cooker(pan, temp) {
 		     return checkCrispy;
 	     }
 	     
-	   this.CrispyValue = function() {
+	   this.CrispyValue = function() {                      //Return values for the story for Crispy or not crispy
 	      if(this.isCrispy()){
 	         return "Yes, it\'s Crispy";
 	      }else{
-	         return "No this is not Crispy";
+	         return "No this is not Crispy";                
 	      }
 	   }	  	    
 	}
 
 
 
+/**
+ * logger function
+ * Utility Function to disable the console so the return values come out first
+ */
+
+var logger = function() {													//Declare the logger function
+
+    var oldConsoleLog = null;												//sets the old log to null turning it off
+    var prop = {};                                                        	//Create property to publish console
+
+    prop.enableConsole =  function enableConsole() {                        //Adds the method to enable the console
+                        
+                            if(oldConsoleLog == null)						//If the console is off
+                                return;
+                            window['console']['log'] = oldConsoleLog;		//Sets the setting to turn on the console availability 
+                        };
+
+    prop.disableConsole = function disableConsole() {                       //Adds the method to disable the console
+                        
+                            oldConsoleLog = console.log;				    //Sets the console to off
+                            window['console']['log'] = function() {};		//updates the function for logger
+                        };
+    return prop;															//Returns the console
+}();  //Self calling function
+
+  
+  
   
 
 /**
@@ -254,37 +281,34 @@ var arriveAtBaconNirvana = function (boughtBacon) {                 //Main Call
 	var cookit = new Cooker("small", 350);									//Use a small pan and heat to 350 to get crispy bacon
 	
 	console.log(""); 
+	console.log(cookit.howToCookBacon());                                   //Information on how to cook your bacon
     console.log('Let us see if we got our ' + str +' crispy.. '+cookit.CrispyValue());
     console.log('Now to we review bacon and the flavor ratings.. here is how I rate them:');
     console.log("");
 
-    var thick = new Bacon({ name: "Apple wood", flavor: 80 });									//Testing 'property' pattern and constructor passing in object
+    var thick = new Bacon({ name: "Apple wood", flavor: 80 });									//creation of thick cut apple bacon object
 
-    var medium = new Bacon({ name: "Hickory smoked",flavor: 75  });                             // version with Hickory Smoked
+    var medium = new Bacon({ name: "Hickory smoked",flavor: 75  });                             // version with Hickory Smoked medium cut
 
-    var thin = new Bacon({ name: "Pepper cured",flavor: 35  });                                 // Pepper cured
+    var thin = new Bacon({ name: "Pepper cured",flavor: 35  });                                 // Pepper cured thin cut
 
     console.log("Cut:"+myJSONBaconDescObject.bacons[0].cut);
-    console.log("Name: " + thick.getName() + "\nFlavor setting: " + thick.getFlavor());             //Orignally was going to test the age of the bacon 
+    console.log("Name: " + thick.getName() + "\nFlavor setting: " + thick.getFlavor());         //Orignally was going to test the age of the bacon 
     console.log("");
     console.log("Cut:"+myJSONBaconDescObject.bacons[1].cut);
-    console.log("Name: " + medium.getName() + "\nFlavor setting: " + medium.getFlavor());
+    console.log("Name: " + medium.getName() + "\nFlavor setting: " + medium.getFlavor());       //Output of the medium cut
     console.log("");
     console.log("Cut:"+myJSONBaconDescObject.bacons[2].cut);
-    console.log("Name: " + thin.getName() + "\nFlavor setting: " + thin.getFlavor());
+    console.log("Name: " + thin.getName() + "\nFlavor setting: " + thin.getFlavor());           //Output of the thin cut
     console.log("");
     console.log("I have decided to create my own bacon . . . Muahahaha, I shall call it");                  
-    thin.setName( "Texas Bacon" );  // Testing mutators
-    thin.setFlavor( 100 );          // Testing mutators
+    thin.setName( "Texas Bacon" ); 																 // Testing mutators
+    thin.setFlavor( 100 );         																 // Testing mutators
 
     console.log("Name: " + thin.getName() + "\nFlavor: " + thin.getFlavor());
-    
-    console.log("Name: " + thin.getName() + "\nBacon rating calculation : " + thin.getFlavorRating());  // Testing public calls to private methods
+    console.log("Now to test the evil bacon acceptance calculator for my creation..");
+    console.log(thin.getName() + " has a estimated calculation for acceptance of: " + thin.getFlavorRating()+'%');  // Testing public calls to private methods
 
-	
-	
-	
-	
 
     }else{
        console.log("No worries I have extra "+ str +" in the fridge! So no need to go to the store.");
@@ -294,30 +318,6 @@ var arriveAtBaconNirvana = function (boughtBacon) {                 //Main Call
 }
 
 
-/**
- * logger function
- * Utility Function to disable the console so the return values come out first
- */
-
-var logger = function() {													//Declare the logger function
-
-    var oldConsoleLog = null;												//sets the old log to null turning it off
-    var prop = {};                                                        	//Create property to publish console
-
-    prop.enableConsole =  function enableConsole() {                        //Adds the method to enable the console
-                        
-                            if(oldConsoleLog == null)						//If the console is off
-                                return;
-                            window['console']['log'] = oldConsoleLog;		//Sets the setting to turn on the console availability 
-                        };
-
-    prop.disableConsole = function disableConsole() {                       //Adds the method to disable the console
-                        
-                            oldConsoleLog = console.log;				    //Sets the console to off
-                            window['console']['log'] = function() {};		//updates the function for logger
-                        };
-    return prop;															//Returns the console
-}();  //Self calling function
 
 
 /**

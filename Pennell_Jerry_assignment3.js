@@ -14,7 +14,6 @@ var str    = 'bacon',                                   //Create a static string
     numToReachEpicBacon = 48,                           //Number to reach epic bacon    
     typeOfBacon = '',								    //Type of bacon String
     listOfBacon = ["Pork", "Turkey", "Faken"],          //Array List of bacon out there
-
     
     //JSON Objects
     myJSONBaconDescObject = {"bacons": [                                                                                  //Bacon description JSON Object
@@ -33,19 +32,7 @@ var str    = 'bacon',                                   //Create a static string
                                        ]
                                };
                                
-
-function JSONPropertyCall(){
-	for (var key in myJSONBaconTypeObject) {
-		   var obj = myJSONBaconTypeObject[key];
-		   for (var prop in obj) {
-		      console.log(prop + " = " + obj[prop].baconName);
-		   }
-		}
-}
-
-JSONPropertyCall();
-
-
+                               
 
 /**
  * Boolean Function
@@ -114,8 +101,8 @@ var	concatAllThat = function (strIn, strAlso) {                //Function that a
  */   
 
 var baconArray = function (numPickYourBacon, arrTypesOfBacon) {
-        var arrayTaste =myJSONBaconTypeObject.types,                                     //Array with descriptions
-            quote = ["","",""];                                                           //Initialize the array
+        var arrayTaste =myJSONBaconTypeObject.types,                                  //Array with descriptions
+            quote = ["","","","","",""];                                              //Initialize the array
         console.log("");    
         console.log("For clarification let\'s explain the types of bacon and what I think about them.");    
         for (var i = 0; i < arrayTaste.length; i++){
@@ -199,49 +186,31 @@ var Bacon = function( bacon_options ){
 function Cooker(pan, temp) { 
 	   this.pan = pan; 
 	   this.temp = temp;
-	   this.bacontemp=350;
-	   this.pansizes =['small','medium','large'];
+	   this.bacontemp=350;                              //Number Property
+	   this.pansizes =['small','medium','large'];       //Array Property
 	   
 	   this.howToCookBacon = function(){ 
 	     return 'If your going to cook this bacon use ' + this.pan + ' at ' + this.temp + ' degrees.';       //Returns recommended bacon use set by user                       
 	   }	
 	     
-	   this.isCrispy = function(){ 																			//Method to check if pan will allow the bacon to get crispy	     	
+	   this.isCrispy = function() { 															//Method to check if pan will allow the bacon to get crispy	     	
 		   var checkCrispy = false;
 		 
 		     if (this.temp >= 350 && pan ==this.pansizes[0] ) {
 		           checkCrispy=  true;		      
 		     }		     
 		     return checkCrispy;
-	     }	  	    
+	     }
+	     
+	   this.CrispyValue = function() {
+	      if(this.isCrispy()){
+	         return "Yes, it\'s Crispy";
+	      }else{
+	         return "No this is not Crispy";
+	      }
+	   }	  	    
 	}
 
-var cookit = new Cooker("small", 350);
-
-console.log('==================== >' +' '+cookit.isCrispy());
-
-var thick = new Bacon({ name: "Apple wood", flavor: 24 });										//Testing 'property' pattern and constructor passing in object
-
-var medium = new Bacon({ name: "Hickory smoked" });                                             // Testing 1 parameter version
-
-var thin = new Bacon();                                                                         // Should use defaults for name and flavor
-
-// Testing accessors
-// Expected: normal
-console.log("Name: " + thick.getName() + "\nFlavor setting: " + thick.getFlavor());
-// Expected normal name + 0 age
-console.log("Name: " + medium.getName() + "\nFlavor setting: " + medium.getFlavor());
-// Expected: null name and 0 age
-console.log("Name: " + thin.getName() + "\nFlavor setting: " + thin.getFlavor());
-
-// Testing mutators
-thin.setName( "Texas Bacon" );
-thin.setFlavor( 100 );
-
-console.log("Name: " + thin.getName() + "\nFlavor: " + thin.getFlavor());
-
-// Testing public calls to private methods
-console.log("Name: " + thin.getName() + "\nBacon rating calculation : " + thin.getFlavorRating());
 
 
   
@@ -262,23 +231,59 @@ var arriveAtBaconNirvana = function (boughtBacon) {                 //Main Call
        console.log("In my best Julia Childs Voice.. not the croaking one, I must review my options of "+str+".");
        console.log("Just to be fair I will detail my thoughts on other "+str+" products");
        
-//Calling Boolean Function	                                																													 //Pass in bacon to make the statement true
-	isBestBacon('bacon','apple wood');              																														  //Pass in 'apple wood' to make this statement true
+//Calling Boolean Function	                                																													
+	isBestBacon('bacon','apple wood');    							        //Pass in 'bacon' and 'apple wood' to make this statement true
 	console.log("");	
 	console.log("Let us count the bacon to see if we have reached bacon nirvana ...");
 	
 //Calling Number Function	
-	poundOfBacon(24);                                                                        																						//Accepts a number to see if you have enough to reach bacon Nirvana
+	poundOfBacon(24);                                                       //Accepts a number to see if you have enough to reach bacon Nirvana
 	
 //Calling String Function
     
-	concatAllThat('bacon','good');                    																														//Accepts two strings as parameters for 'What is worth waiting for'?
+	concatAllThat('bacon','good');                    						//Accepts two strings as parameters for 'What is worth waiting for'?
 	
 //Calling the Bacon Array
          
-	baconArray(1, listOfBacon);     																																			//Types of bacon as an array Pick 0,1,2 for the elements ["Pork", "Turkey", "Faken"]
+	baconArray(1, listOfBacon);     										//Types of bacon as an array Pick 0,1,2 for the elements ["Pork", "Turkey", "Faken"]
 	
 	console.log("One last word of wisdom .. in order to reach Epic "+str+" you will need "+numToReachEpicBacon+" pieces!");
+	
+	
+	
+	var cookit = new Cooker("small", 350);									//Use a small pan and heat to 350 to get crispy bacon
+	
+	console.log(""); 
+    console.log('Let us see if we got our ' + str +' crispy.. '+cookit.CrispyValue());
+    console.log('Now to we review bacon and the flavor ratings.. here is how I rate them:');
+    console.log("");
+
+    var thick = new Bacon({ name: "Apple wood", flavor: 80 });									//Testing 'property' pattern and constructor passing in object
+
+    var medium = new Bacon({ name: "Hickory smoked",flavor: 75  });                             // version with Hickory Smoked
+
+    var thin = new Bacon({ name: "Pepper cured",flavor: 35  });                                 // Pepper cured
+
+    console.log("Cut:"+myJSONBaconDescObject.bacons[0].cut);
+    console.log("Name: " + thick.getName() + "\nFlavor setting: " + thick.getFlavor());             //Orignally was going to test the age of the bacon 
+    console.log("");
+    console.log("Cut:"+myJSONBaconDescObject.bacons[1].cut);
+    console.log("Name: " + medium.getName() + "\nFlavor setting: " + medium.getFlavor());
+    console.log("");
+    console.log("Cut:"+myJSONBaconDescObject.bacons[2].cut);
+    console.log("Name: " + thin.getName() + "\nFlavor setting: " + thin.getFlavor());
+    console.log("");
+    console.log("I have decided to create my own bacon . . . Muahahaha, I shall call it");                  
+    thin.setName( "Texas Bacon" );  // Testing mutators
+    thin.setFlavor( 100 );          // Testing mutators
+
+    console.log("Name: " + thin.getName() + "\nFlavor: " + thin.getFlavor());
+    
+    console.log("Name: " + thin.getName() + "\nBacon rating calculation : " + thin.getFlavorRating());  // Testing public calls to private methods
+
+	
+	
+	
 	
 
     }else{
@@ -294,10 +299,10 @@ var arriveAtBaconNirvana = function (boughtBacon) {                 //Main Call
  * Utility Function to disable the console so the return values come out first
  */
 
-var logger = function() {																																						//Declare the logger function
+var logger = function() {													//Declare the logger function
 
-    var oldConsoleLog = null;																																				//sets the old log to null turning it off
-    var prop = {};                                                        																												 //Create property to publish console
+    var oldConsoleLog = null;												//sets the old log to null turning it off
+    var prop = {};                                                        	//Create property to publish console
 
     prop.enableConsole =  function enableConsole() {                        //Adds the method to enable the console
                         
@@ -311,7 +316,7 @@ var logger = function() {																																						//Declare the log
                             oldConsoleLog = console.log;				    //Sets the console to off
                             window['console']['log'] = function() {};		//updates the function for logger
                         };
-    return prop;																																										//Returns the console
+    return prop;															//Returns the console
 }();  //Self calling function
 
 
@@ -324,6 +329,8 @@ var logger = function() {																																						//Declare the log
 (function tryMyConsole() { 
         if (typeof console != "undefined") { 
         
+
+
 
 logger.disableConsole();                                                       //Disable the console so no console return values shown
 var returnTypeOfBoolean = isBestBacon('bacon','apple wood'),                   //return of boolean function

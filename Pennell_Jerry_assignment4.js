@@ -10,7 +10,9 @@
  *
  */
 
+var JerryLib = function (){
 
+}
 
 /*
  *Phone Number validation Function
@@ -54,9 +56,7 @@ var phonenum ="123x444c4444";
  *
 */
 function isValidEmail(str) {
-
 	   return (str.indexOf(".") > 2) && (str.indexOf("@") > 0);
-
 	}
 	
 var emailadd = "leroy.jenkins@hotmail.com";
@@ -183,41 +183,18 @@ above or below a number within a certain percent?
 Find the number of hours or days 
 difference between two dates.
 */
-var DateDiff = {
-	    
-		inHours: function(d1, d2) {
-	        var t2 = d2.getTime();
-	        var t1 = d1.getTime();
-	 
-	        return parseInt((t2-t1)/(3600*1000));
-	    },
-	    
-	    inDays: function(d1, d2) {
-	        var t2 = d2.getTime();
-	        var t1 = d1.getTime();
-	 
-	        return parseInt((t2-t1)/(24*3600*1000));
-	    },
-	 
-	    inWeeks: function(d1, d2) {
-	        var t2 = d2.getTime();
-	        var t1 = d1.getTime();
-	 
-	        return parseInt((t2-t1)/(24*3600*1000*7));
-	    },
-	 
-	    inMonths: function(d1, d2) {
-	        var d1Y = d1.getFullYear();
-	        var d2Y = d2.getFullYear();
-	        var d1M = d1.getMonth();
-	        var d2M = d2.getMonth();
-	 
-	        return (d2M+12*d2Y)-(d1M+12*d1Y);
-	    },
-	 
-	    inYears: function(d1, d2) {
-	        return d2.getFullYear()-d1.getFullYear();
-	    }
+var DateDiff = function(t1, t2)  {
+         t1 = new Date(t1).getTime();
+         t2 = new Date(t2).getTime();   //calls get time function built in for param 2                 
+	                
+	        console.log("=====> " + t1);	                  
+			this.inHours = function() {                                                
+		        return parseInt((t2-t1)/(3600*1000));        //Returns the time in hours
+		    }
+		    
+		    this.inDays = function() {	 
+		        return parseInt((t2-t1)/(24*3600*1000));     //Returns the time in Days
+		    }	 
 	}
 	
 //Validate Date	
@@ -231,10 +208,13 @@ function isValidDate(d) {
 	var dString = "April, 28, 2012";
     var dStringtoo = "April, 31, 2012"
 	 
+/*
 	var d1 = new Date(dString);
 	var d2 = new Date(dStringtoo);
+*/
+	var diffofdate = new DateDiff("April, 28, 2012", "April, 31, 2012");
 
-	console.log(DateDiff.inHours(d1, d2));
+	console.log("The difference of the date is = "+	 diffofdate.inHours());
 
 
 /*

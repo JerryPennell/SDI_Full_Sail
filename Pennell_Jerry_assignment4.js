@@ -14,22 +14,39 @@
 
 /*
  *Phone Number validation Function
- *
- *
+ *Checks for basic American phone numbers 11, 10, 7 instances
+ *pass in a string / num to determine if it fits the phone criteria
 */
 
-function validatePhone (phone) {
-    var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-    
-    if (regex.test(phone)) {
-         console.log(phone+" is a valid phone number..");
+function formatAndValidatePhone(phone) {
+    phone = phone.replace(/[^0-9]/g,'');
+    var digits = phone.length;
+    if (digits > 11) {
+        return false;
     } else {
-       console.log(phone+" is not a valid phone number");
-    }
+        code = '';
+        if (digits == 11) {
+            code = '1 ';
+            phone = phone.substring(1);
+        } else if (digits == 10) {
+           area = phone.substring(0,3);
+           prefix = phone.substring(3,6);
+           line = phone.substring(6);
+           return '(' + area + ') ' + prefix + '-' + line;
+        } else if (digits == 7) {
+          prefix = phone.substring(0,3);
+          line = phone.substring(3,7);
+          return prefix + '-' + line;
+        }
+        area = phone.substring(0,3);
+        prefix = phone.substring(3,6);
+        line = phone.substring(6);
+        return code + '(' + area + ') ' + prefix + '-' + line;
+     }
 }
 
-var phonenum ="(888)-888-4455";
- console.log("Validating phone... "+validatePhone(phonenum));
+var phonenum ="123x444c4444";
+ console.log("Validating phone... "+formatAndValidatePhone(phonenum));
 
 /*
  *Email address validation Function
@@ -41,7 +58,9 @@ function isValidEmail(str) {
 	   return (str.indexOf(".") > 2) && (str.indexOf("@") > 0);
 
 	}
-
+	
+var emailadd = "leroy.jenkins@hotmail.com";
+console.log("Is "+emailadd+" an email address? : "+isValidEmail(emailadd));
 
 /*
  *URL validation Function
@@ -55,9 +74,9 @@ function is_valid_url(url)
 
 var urlset = "http://www.google.com";
 if(is_valid_url(urlset)) {
-	console.log(urlset+" is a valid url");
+	console.log(urlset+ " is a valid url");
 }else {
-	console.log("This is not a valid url");
+	console.log(urlset+" is not a valid url");
 }
 
 
@@ -85,7 +104,7 @@ String.prototype.toTitleCase = function () {
 	};
 	
 	var ThisStr = "little bo peep has a sheep";
-	console.log("This is title case for this string -"+ThisStr.toTitleCase());
+	console.log("This is title case for this string -> "+ThisStr.toTitleCase());
 
 /*
 Given a string that is a list of things separated by 
@@ -148,7 +167,10 @@ function format_number(pnumber,decimals){
     return result;
 }
 
+var numtoformat = 2.445;
+var decplaces = 2;
 
+console.log("Formatting the number "+numtoformat+" to "+decplaces+" decimal places= "+format_number(numtoformat,2));
 
 /*
 Fuzzy-match a number: is the number 
@@ -230,6 +252,22 @@ parseInt(testfunc);
 
 console.log("Parse integer from string "+parseInt(testfunc));
 
+
+
+
+
+
+/*
+Find the smallest value in an array that is 
+greater than a given number
+*/
+
+
+/*
+Find the total value of just the numbers in an array, 
+even if some of the items are not numbers.
+*/
+
 //This function removes non-numeric characters
 function stripNonNumeric( str )
 {
@@ -249,20 +287,6 @@ function stripNonNumeric( str )
 }
 
 console.log("This is the strip non numeric characters function: " +stripNonNumeric("sdwggg34gstgtr"));
-
-
-/*
-Find the smallest value in an array that is 
-greater than a given number
-*/
-
-
-/*
-Find the total value of just the numbers in an array, 
-even if some of the items are not numbers.
-*/
-
-
 
 /*
 Given an array of objects and the name of a key, return 

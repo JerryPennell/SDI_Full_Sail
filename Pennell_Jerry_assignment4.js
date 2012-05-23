@@ -15,9 +15,9 @@ var lib = new JerryLib();  //Create a new instance of Jerry Lib
 
 
 
-var phonenum ="123x444c4444";
+var phonenum ="123x444c4444";   //Test Phonenum                                              
 console.log("///  Phone number check ///");
-console.log("Validating phone... "+lib.formatAndValidatePhone(phonenum));
+console.log("Validating phone... "+lib.formatAndValidatePhone(phonenum));  //output for validation of phonenum check
 console.log("");
  
  
@@ -28,7 +28,7 @@ console.log("");
 	
 var emailadd = "leroy.jenkins@hotmail.com";
 console.log("///  Email address validation ///");
-console.log("Is "+emailadd+" an email address? : "+lib.isValidEmail(emailadd));
+console.log("Is "+emailadd+" an email address? : "+lib.isValidEmail(emailadd));  //output of email validation check
 console.log("");
 
 /*
@@ -58,12 +58,12 @@ console.log("");
 /*
 Given a string that is a list of things separated by 
 a given string, as well as another string separator, 
-return a string with the first separator changed to the 
+return a string with the first separator changed to the               //TODO: review
 second: "a,b,c" + "," + "/" → "a/b/c".
 */
 
 console.log("///  Find and replace characters check///");
-console.log("replaceChars "+findAndReplace("a,b,c",",","/"));
+console.log("replaceChars "+lib.findAndReplace("a,b,c",",","/"));
 console.log("");
 
 /*
@@ -74,7 +74,7 @@ of decimal places, as for money: 2.1 → 2.10
 var numtoformat = 2.445;
 var decplaces = 2;
 console.log("/// Format decimal to number of places check ///");
-console.log("Formatting the number "+numtoformat+" to "+decplaces+" decimal places= "+format_number(numtoformat,2));
+console.log("Formatting the number "+numtoformat+" to "+decplaces+" decimal places= "+lib.format_number(numtoformat,2));
 console.log("");
 
 /*
@@ -85,9 +85,9 @@ above or below a number within a certain percent?
 
 var nm= 9,
     percent=10;
-
+console.log("/// Fuzzy Match check ///");
 console.log("Fuzzy match of  above or below a number ("+nm+") in this case, within a certain percent.. of "+percent+" percent is: "+nm.isFuzzy(nm,percent)); 
-
+console.log("");
 
 /*
 Find the number of hours or days 
@@ -96,10 +96,11 @@ difference between two dates.
 
 var dString = "April, 28, 2012";
 var dStringtoo = "April, 31, 2012"
-var diffofdate = new DateDiff("April, 28, 2012", "April, 31, 2012");
-
+var diffofdate = new lib.DateDiff("April, 28, 2012", "April, 31, 2012");
+console.log("/// Checks the difference between two dates ///");
+console.log("Is the date valid "+lib.isValidDate(diffofdate));
 console.log("The difference of the date is = "+	 diffofdate.inHours());
-	
+console.log("");	
 
 /*
 Given a string version of a number such as "42", 
@@ -107,9 +108,10 @@ return the value as an actual Number, such as 42.
 */
 	
 
-var testfunc = new convertInteger("42");
+var testfunc = new lib.convertInteger("42");
+console.log("/// Convert string to integer check ///");
 console.log("Parse integer from string "+parseInt(testfunc));
-
+console.log("");
 
 /*
 Find the smallest value in an array that is 
@@ -118,20 +120,20 @@ greater than a given number
 
 
 var arr=[1,6,12,14],n=5;
+console.log("/// Looking for smallest value in array greater than given num check ///");
 console.log("The smallest number in the array that is greater than "+n+" is "+arr.minGreaterThan(n));
-
+console.log("");
 
 /*
 Find the total value of just the numbers in an array, 
 even if some of the items are not numbers.
 */
 
-
 var ary = [100,"100",100,"3"];
 var average = ary.sum();
-
+console.log("/// Sum of total values of an array even if items are not numbers check ///");
 console.log("The total value of just the numbers in the array is : "+average);
-
+console.log("");
 
 
 /*
@@ -142,14 +144,13 @@ the array sorted by the value of that key in each of the objects:
 
 var myObjectArray = [{ a : 2},{ a : 3},{ a : 1}];
 
-
 //sort by a, ascending
 var x = myObjectArray.sortByField("a");	
-
+console.log("/// Array of objects are sorted by values check///");
 for (var i = 0; i < x.length; i++){
     console.log("Sorting values of object a["+i+"]="+x[i].a);
 }
-
+console.log("");
 	
 
 	

@@ -50,11 +50,12 @@ function formatAndValidatePhone(phone) {
 var phonenum ="123x444c4444";
  console.log("Validating phone... "+formatAndValidatePhone(phonenum));
 
+ 
+ 
 /*
  *Email address validation Function
- *
- *
 */
+ 
 function isValidEmail(str) {
 	   return (str.indexOf(".") > 2) && (str.indexOf("@") > 0);
 	}
@@ -65,6 +66,66 @@ console.log("Is "+emailadd+" an email address? : "+isValidEmail(emailadd));
 /*
  *URL validation Function
  *
+ *NODE                     EXPLANATION
+----------------------------------------------------------------------
+(?-imsx:                 group, but do not capture (case-sensitive)
+                         (with ^ and $ matching normally) (with . not
+                         matching \n) (matching whitespace and #
+                         normally):
+----------------------------------------------------------------------
+  /                        '/'
+----------------------------------------------------------------------
+  ^                        the beginning of the string
+----------------------------------------------------------------------
+  (                        group and capture to \1:
+----------------------------------------------------------------------
+    ht                       'ht'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    f                        'f'
+----------------------------------------------------------------------
+  )                        end of \1
+----------------------------------------------------------------------
+  tp                       'tp'
+----------------------------------------------------------------------
+  s?                       's' (optional (matching the most amount
+                           possible))
+----------------------------------------------------------------------
+  ://                      '://'
+----------------------------------------------------------------------
+  [a-z0-9-\.]+             any character of: 'a' to 'z', '0' to '9',
+                           '-', '\.' (1 or more times (matching the
+                           most amount possible))
+----------------------------------------------------------------------
+  \.                       '.'
+----------------------------------------------------------------------
+  [a-z]{2,4}               any character of: 'a' to 'z' (between 2
+                           and 4 times (matching the most amount
+                           possible))
+----------------------------------------------------------------------
+  /?                       '/' (optional (matching the most amount
+                           possible))
+----------------------------------------------------------------------
+  (                        group and capture to \2 (optional
+                           (matching the most amount possible)):
+----------------------------------------------------------------------
+    [^\s<>\#%",\{\}\\|       any character except: whitespace (\n,
+    \\\^\[\]`]+              \r, \t, \f, and " "), '<', '>', '\#',
+                             '%', '"', ',', '\{', '\}', '\\', '|',
+                             '\\', '\^', '\[', '\]', '`' (1 or more
+                             times (matching the most amount
+                             possible))
+----------------------------------------------------------------------
+  )?                       end of \2 (NOTE: because you are using a
+                           quantifier on this capture, only the LAST
+                           repetition of the captured pattern will be
+                           stored in \2)
+----------------------------------------------------------------------
+                           '\n'
+----------------------------------------------------------------------
+)                        end of grouping
+---------------------------------------------------------------------
  *
 */
 function is_valid_url(url)
@@ -83,12 +144,140 @@ if(is_valid_url(urlset)) {
 /*
  *Title Case Function
  *
+ *NODE                     EXPLANATION
+----------------------------------------------------------------------
+(?-imsx:                 group, but do not capture (case-sensitive)
+                         (with ^ and $ matching normally) (with . not
+                         matching \n) (matching whitespace and #
+                         normally):
+----------------------------------------------------------------------
+  /                        '/'
+----------------------------------------------------------------------
+  ^                        the beginning of the string
+----------------------------------------------------------------------
+  (                        group and capture to \1:
+----------------------------------------------------------------------
+    a                        'a'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    an                       'an'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    and                      'and'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    as                       'as'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    at                       'at'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    but                      'but'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    by                       'by'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    en                       'en'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    for                      'for'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    if                       'if'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    in                       'in'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    of                       'of'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    on                       'on'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    or                       'or'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    the                      'the'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    to                       'to'
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    v                        'v'
+----------------------------------------------------------------------
+    s?                       's' (optional (matching the most amount
+                             possible))
+----------------------------------------------------------------------
+    \.?                      '.' (optional (matching the most amount
+                             possible))
+----------------------------------------------------------------------
+   |                        OR
+----------------------------------------------------------------------
+    via                      'via'
+----------------------------------------------------------------------
+  )                        end of \1
+----------------------------------------------------------------------
+   i                       '\ni'
+----------------------------------------------------------------------
+)                        end of grouping
+----------------------------------------------------------------------
  *
+ *
+ *NODE                     EXPLANATION  for /([^\W_]+[^\s-]*)/g
+----------------------------------------------------------------------
+(?-imsx:                 group, but do not capture (case-sensitive)
+                         (with ^ and $ matching normally) (with . not
+                         matching \n) (matching whitespace and #
+                         normally):
+----------------------------------------------------------------------
+  /                        '/'
+----------------------------------------------------------------------
+  (                        group and capture to \1:
+----------------------------------------------------------------------
+    [^\W_]+                  any character except: non-word
+                             characters (all but a-z, A-Z, 0-9, _),
+                             '_' (1 or more times (matching the most
+                             amount possible))
+----------------------------------------------------------------------
+    [^\s-]*                  any character except: whitespace (\n,
+                             \r, \t, \f, and " "), '-' (0 or more
+                             times (matching the most amount
+                             possible))
+----------------------------------------------------------------------
+  )                        end of \1
+----------------------------------------------------------------------
+   *                       ' ' (0 or more times (matching the most
+                           amount possible))
+----------------------------------------------------------------------
+  /g                       '/g'
+----------------------------------------------------------------------
+)                        end of grouping
+----------------------------------------------------------------------
 */
+
 String.prototype.toTitleCase = function () {
 	  var smallWordRex = /^(a|an|and|as|at|but|by|en|for|if|in|of|on|or|the|to|vs?\.?|via)$/i;
 
-	  return this.replace(/([^\W_]+[^\s-]*) */g, function (match, phrase, index, title) {
+	  return this.replace(/([^\W_]+[^\s-]*) */g, 
+	 function (match, phrase, index, title) {
 	    if (index > 0 && index + phrase.length !== title.length &&
 	      phrase.search(smallWordRex) > -1 && title.charAt(index - 2) !== ":" &&
 	      title.charAt(index - 1).search(/[^\s-]/) < 0) {
@@ -132,10 +321,6 @@ console.log("replaceChars "+findAndReplace("a,b,c",",","/"));
 Format a number to use a specific number 
 of decimal places, as for money: 2.1 → 2.10
 */
-Number.prototype.toFixed = function(precision) {
-	     var power = Math.pow(10, precision || 0);
-	     return String(Math.round(this * power)/power);
- }
 
 
 function format_number(pnumber,decimals){
@@ -176,7 +361,17 @@ console.log("Formatting the number "+numtoformat+" to "+decplaces+" decimal plac
 Fuzzy-match a number: is the number 
 above or below a number within a certain percent?
 */
+Number.prototype.isFuzzy= function(ncompare, percentage){
+    var deviation= ncompare*(percentage/100), 
+           num= +this;
+    return num>= ncompare-deviation && num<= ncompare+deviation;
+}
 
+
+var nm= 9,
+       percent=10;
+
+console.log("Fuzzy match of  above or below a number ("+nm+") in this case, within a certain percent.. of "+percent+" percent is: "+nm.isFuzzy(nm,percent)); 
 
 
 /*
@@ -186,8 +381,7 @@ difference between two dates.
 var DateDiff = function(t1, t2)  {
          t1 = new Date(t1).getTime();
          t2 = new Date(t2).getTime();   //calls get time function built in for param 2                 
-	                
-	        console.log("=====> " + t1);	                  
+           
 			this.inHours = function() {                                                
 		        return parseInt((t2-t1)/(3600*1000));        //Returns the time in hours
 		    }
@@ -216,20 +410,24 @@ function isValidDate(d) {
 
 	console.log("The difference of the date is = "+	 diffofdate.inHours());
 
+	
+	
+	
 
 /*
 Given a string version of a number such as "42", 
 return the value as an actual Number, such as 42.
 */
+	
 function convertInteger(stringarg) {
 	this.num = stringarg;
 }
 convertInteger.prototype.toString = function() {
 	return this.num;
 }
-var testfunc = new convertInteger("42");
-parseInt(testfunc); 
 
+
+var testfunc = new convertInteger("42");
 console.log("Parse integer from string "+parseInt(testfunc));
 
 
@@ -241,6 +439,20 @@ console.log("Parse integer from string "+parseInt(testfunc));
 Find the smallest value in an array that is 
 greater than a given number
 */
+Array.prototype.minGreaterThan=function(a) {
+	var t=this,
+	       r=Number.POSITIVE_INFINITY,
+	       i;
+for (i=0;i<t.length;i++) { 
+	if (a<t[i] && t[i]<r) r=t[i];
+   }    
+ return r;
+}
+
+
+var arr=[1,6,12,14],n=5;
+
+console.log("The smallest number in the array that is greater than "+n+" is "+arr.minGreaterThan(n));
 
 
 /*
@@ -248,25 +460,25 @@ Find the total value of just the numbers in an array,
 even if some of the items are not numbers.
 */
 
-//This function removes non-numeric characters
-function stripNonNumeric( str )
-{
-  str += '';
-  var rgx = /^\d|\.|-$/;
-  var out = '';
-  for( var i = 0; i < str.length; i++ )
-  {
-    if( rgx.test( str.charAt(i) ) ){
-      if( !( ( str.charAt(i) == '.' && out.indexOf( '.' ) != -1 ) ||
-             ( str.charAt(i) == '-' && out.length != 0 ) ) ){
-        out += str.charAt(i);
-      }
-    }
-  }
-  return out;
-}
+Array.prototype.sum = function() {
+	var asum = 0;                                                //Calculator var set to 0
+	var len = this.length;                                       //Length of array
+	for (var i = 0; i < len; i++) {                              //Itterate the array for the length
+	var enm = +this[i];                                          //collecting a value out of the array
+	if(!enm && this[i] !== 0 && this[i] !== '0') enm--;          //if the value is not zero and not string of zero go through the array
+		if (this[i] == enm &&  typeof this[i] != "string" ) {    //Making sure the value is not a string value
+			asum += enm;                                         //Sums the values of the array that pass
+		}
+	}
+	return asum;
+	}
 
-console.log("This is the strip non numeric characters function: " +stripNonNumeric("sdwggg34gstgtr"));
+var ary = [100,"100",100,"3"];
+var average = ary.sum();
+
+console.log("The total value of just the numbers in the array is : "+average);
+
+
 
 /*
 Given an array of objects and the name of a key, return 
@@ -274,5 +486,102 @@ the array sorted by the value of that key in each of the objects:
 "a" + [{a:2},{a:3},{a:1}] → [{a:1},{a:2},{a:3}].
 */
 
+var myObjectArray = [{ a : 2},{ a : 3},{ a : 1}];
 
+//Function to sort an array consisting of Javascript objects by a field you specify
 
+Array.prototype.sortByField = function( fieldName, reverse ) {
+   
+  var values = this;
+  var fieldA, fieldB;
+   
+  function lowerCaseSort( a, b ){
+ 
+    fieldA = a[fieldName];
+    fieldB = b[fieldName];
+     
+    if (fieldA=="" && fieldB=="") {
+      return 0;
+    } else if (fieldA=="") {
+      return 1;
+    } else if (fieldB=="") {
+      return -1;
+    }
+     
+    fieldA = fieldA.toLowerCase();
+    fieldB = fieldB.toLowerCase();
+     
+    if( fieldA > fieldB ){ return 1 * multiplier; }
+    if( fieldA < fieldB ){ return -1 * multiplier; }
+    return 0;
+  }
+   
+  function compareToSort(a,b) {
+    fieldA = a[fieldName];
+    fieldB = b[fieldName];
+     
+    if (fieldA==null && fieldB==null) {
+      return 0;
+    } else if (fieldA==null) {
+      return 1;
+    } else if (fieldB==null) {
+      return -1;
+    }
+     
+    return ( fieldA.compareTo(fieldB) * multiplier);
+  }
+  function genericSort( a, b ){
+     
+    fieldA = a[fieldName];
+    fieldB = b[fieldName];
+     
+    if (fieldA==null && fieldB==null) {
+      return 0;
+    } else if (fieldA==null) {
+      return 1;
+    } else if (fieldB==null) {
+      return -1;
+    }
+     
+    if( fieldA > fieldB ){ return 1 * multiplier; }
+    if( fieldA < fieldB ){ return -1 * multiplier; }
+    return 0;
+  }
+   
+  try {
+    if( !fieldName || values.length === 0 ){ return values; }
+     
+    var multiplier = ( reverse ? -1 : 1);
+     
+    //determine datatype of the fields - based on first value
+    //this function can handle string, number and date sorting
+    var first = values[0][fieldName];   //string, number or object
+     
+    var sortFunction;
+    if (typeof first == "string") {
+      sortFunction = lowerCaseSort;
+    } else if (typeof first=="object" && (first.constructor == (new Date).constructor)) {
+      sortFunction = compareToSort;
+    } else {    //numbers
+      sortFunction = genericSort;
+    }
+     
+    values.sort(sortFunction);
+     
+  } catch (e) {
+    print("error while sorting: " + e.toString())
+  }
+   
+  return values;
+}
+
+//sort by a, ascending
+var x = myObjectArray.sortByField("a");	
+
+for (var i = 0; i < x.length; i++){
+    console.log("Sorting values of object a["+i+"]="+x[i].a);
+}
+
+	
+
+	
